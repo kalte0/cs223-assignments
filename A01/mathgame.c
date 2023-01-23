@@ -13,7 +13,7 @@ int main() {
   int numRounds;
   scanf("%d", &numRounds);
   if (numRounds == 0) {
-          printf("Alrighty! Thanks for not playing!");
+          printf("Alrighty! Thanks for not playing, I guess?\n");
           return 0;
   }
   int randomNum1, randomNum2;
