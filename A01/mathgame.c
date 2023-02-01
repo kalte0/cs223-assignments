@@ -23,7 +23,7 @@ int main() {
   int randomNum1, randomNum2;
   int numCorrect = 0;
   int playerAnswer;
-
+ 
   for (int i = 0; i < numRounds; i++ ) { // play a [numRounds] number of rounds:
     randomNum1 = rand() % 9 + 1; // num 1-9 inclusive.    
     randomNum2 = rand() % 9 + 1; // num 1-9 inclusive. 
