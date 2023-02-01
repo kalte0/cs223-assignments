@@ -48,6 +48,15 @@ void printSongs() {
   
 }
 
+/* 
+* adds a song to songList when given all attributes. 
+*
+* @param min integer minutes duration of song to be added. 
+* @param sec integer seconds duration of song to be added.
+* @param danc float danceability of song to be added. 
+* @param art char* artist name of song to be added. 
+* @param title char* title of song to be added. 
+*/
 void makeSong(int min, int sec, float danc, char* art, char* title) { 
   if (numSongs >= songListLength) { // if songList is full. 
     printf("You cannot add another song to the list!\n");   
