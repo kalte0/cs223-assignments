@@ -28,7 +28,7 @@ int main() {
     if (buff[i] >= 97 && buff[i] <= 122) { // if char is lowercase letter:
       buff[i] = randomChars[rand()%4]; // replace with @, !, #, or *
     } 
-	  i++; 
+    i++; 
   }
   
   // print out altered statement. 
