@@ -59,16 +59,16 @@ void printSongList(struct song* songList) {
   // for all songs in the songList:
   for (int i = 0; i < numSongs; i ++ ) { 
     if (songList[i].seconds < 10) { // if there's less than 10 seconds, print 0 before. 
-      printf("%d) %-30s artist: %-30s duration: %d:0%d D: %.3f E: %.3f T: %.3f V: %.3f\n",
-              i, songList[i].title, songList[i].artist, songList[i].minutes, 
-              songList[i].seconds, songList[i].danceability, songList[i].energy, 
-              songList[i].tempo, songList[i].valence); 
+      printf("%d) %-30s artist: %-30s duration: %d:0%d D: %.3f E: %.3f T: %.3f "
+              "V: %.3f\n", i, songList[i].title, songList[i].artist, 
+              songList[i].minutes, songList[i].seconds, songList[i].danceability, 
+              songList[i].energy, songList[i].tempo, songList[i].valence); 
     }
     else { // else, print without a 0 before the seconds. 
-      printf("%d) %-30s artist: %-30s duration: %d:%d D: %.3f E: %.3f T: %.3f V: %.3f\n",
-              i, songList[i].title, songList[i].artist , songList[i].minutes, 
-              songList[i].seconds, songList[i].danceability, songList[i].energy, 
-              songList[i].tempo, songList[i].valence); 
+      printf("%d) %-30s artist: %-30s duration: %d:%d D: %.3f E: %.3f T: %.3f "
+              "V: %.3f\n", i, songList[i].title, songList[i].artist, 
+              songList[i].minutes, songList[i].seconds, songList[i].danceability, 
+              songList[i].energy, songList[i].tempo, songList[i].valence); 
     }
   }
 }
