@@ -25,16 +25,13 @@ int numSongs; // global variable keeps track of the number of songs in songList.
 
 struct song* generateSongList() { 
   // Create a file object for the .csv file to read:
-  printf("test"); 
   FILE *fp = NULL;
   fp = fopen("songlist.csv", "r"); 
-  printf("test");  
   // read the first line and store the number of songs:
   char buffer[128]; 
   fgets(buffer, 128, fp);   
   numSongs = atoi(strtok(buffer, ",")); 
-  printf("%d", numSongs); 
-  struct song *songList = malloc(sizeof(struct song) * numSongs); 
+  struct song *songList = malloc(sizeof(struct song) * numSongs);
   
   fgets(buffer, 128, fp); // read and discard the second line, a header. 
   for (int i = 0; i < numSongs; i ++ ) { // for each song to read: 
@@ -42,7 +39,7 @@ struct song* generateSongList() {
     struct song newSong; // make a song to store information into temporarily
     strcpy(newSong.title, strtok(buffer, ",")); // save the title
     strcpy(newSong.artist, strtok(NULL, ",")); // save the artist
-    int totalSeconds = atoi(strtok(NULL, ","))/100; // store seconds.
+    int totalSeconds = atoi(strtok(NULL, ","))/1000; // store seconds.
     newSong.minutes = totalSeconds/60; // calculate minutes. 
     newSong.seconds = totalSeconds%60; // caluclate seconds to display.
     newSong.danceability = atof(strtok(NULL, ",")); // store danceability. 
@@ -61,7 +58,7 @@ struct song* generateSongList() {
 void printSongList(struct song* songList) { 
   // for all songs in the songList:
   for (int i = 0; i < numSongs; i ++ ) { 
-    if (songList[i].minutes < 10) { // if there's less than 10 seconds, print 0 before. 
+    if (songList[i].seconds < 10) { // if there's less than 10 seconds, print 0 before. 
       printf("%d) %-30s artist: %-30s duration: %d:0%d D: %.3f E: %.3f T: %.3f V: %.3f\n",
               i, songList[i].title, songList[i].artist, songList[i].minutes, 
               songList[i].seconds, songList[i].danceability, songList[i].energy, 
