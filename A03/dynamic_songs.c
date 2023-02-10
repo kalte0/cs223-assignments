@@ -25,14 +25,15 @@ int numSongs; // global variable keeps track of the number of songs in songList.
 
 struct song* generateSongList() { 
   // Create a file object for the .csv file to read:
+  printf("test"); 
   FILE *fp = NULL;
-  fp = fopen("songList.csv", "r"); 
-  
+  fp = fopen("songlist.csv", "r"); 
+  printf("test");  
   // read the first line and store the number of songs:
   char buffer[128]; 
   fgets(buffer, 128, fp);   
   numSongs = atoi(strtok(buffer, ",")); 
-
+  printf("%d", numSongs); 
   struct song *songList = malloc(sizeof(struct song) * numSongs); 
   
   fgets(buffer, 128, fp); // read and discard the second line, a header. 
