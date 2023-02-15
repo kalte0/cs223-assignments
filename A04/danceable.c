@@ -10,7 +10,7 @@
 #include <string.h>
 
 /* 
-* song struct contians information about a single song.
+* song struct contains information about a single song.
 */
 struct song { 
   char title[128]; 
@@ -35,17 +35,17 @@ struct node {
 * function inserts a node to the front of the given list with a given value. 
 * 
 * @param val the value to go into the new head node. 
-* @param head the current head of the linked list before prepend. 
+* @param head of the linked list before prepend. 
 * @return the new head for the linked list, a node with the given value. 
 */ 
 struct node* insert_front(struct song val, struct node *head) { 
-  struct node *n = malloc(sizeof(struct node)); 
-  if (n == NULL) { 
+  struct node *n = malloc(sizeof(struct node)); // allocate space for new head
+  if (n == NULL) { // if no space left to store. 
     printf("ERROR: Out of space!\n"); 
     exit(1); 
   }
-  n -> val = val; 
-  n -> next = head; 
+  n -> val = val; // set the value of the new head.
+  n -> next = head; // make th ehead point to the previous head of the list.
   return n;  
 }
 
@@ -54,9 +54,9 @@ struct node* insert_front(struct song val, struct node *head) {
 * @param head the head node of the given list to print. 
 */ 
 void printList(struct node *head) { 
-  int numInList = 0; 
-  for (struct node* n = head; n != NULL; n = n -> next) { 
-    if (n -> val.seconds < 10) { // if there's less than 10 seconds, print 0 before.        
+  int numInList = 0; // index while moving through list: 
+  for (struct node* n = head; n != NULL; n = n -> next) { // for each node in list: 
+    if (n -> val.seconds < 10) { // if there's less than 10 seconds, print 0 before.   
       printf("%d) %-30s artist: %-30s duration: %d:0%d D: %.3f E: %.3f T: %.3f "
               "V: %.3f\n", numInList++, n -> val.title, n -> val.artist,
               n -> val.minutes, n -> val.seconds, n -> val.danceability,
@@ -80,14 +80,14 @@ void printList(struct node *head) {
 * @return a song struct containing the information from the given line. 
 */ 
 struct song generateSongFromLine(char* line) { 
-    struct song newSong; 
-    strcpy(newSong.title, strtok(line, ",")); 
-    strcpy(newSong.artist, strtok(NULL, ","));
-    int totalSeconds = atoi(strtok(NULL, ","))/1000; 
-    newSong.minutes = totalSeconds/60; 
-    newSong.seconds = totalSeconds%60; 
-    newSong.danceability = atof(strtok(NULL, ",")); 
-    newSong.energy = atof(strtok(NULL, ",")); 
+    struct song newSong; // define a struct to fill with information
+    strcpy(newSong.title, strtok(line, ",")); // store title
+    strcpy(newSong.artist, strtok(NULL, ",")); // store artist name
+    int totalSeconds = atoi(strtok(NULL, ","))/1000; // store total seconds
+    newSong.minutes = totalSeconds/60; // store number of minutes
+    newSong.seconds = totalSeconds%60; // store numbers of seconds
+    newSong.danceability = atof(strtok(NULL, ",")); // store danceability
+    newSong.energy = atof(strtok(NULL, ",")); // store energy 
     newSong.tempo = atof(strtok(NULL, ",")); // store tempo. 
     newSong.valence = atof(strtok(NULL, ",")); // store valence. 
     return newSong;  
@@ -99,16 +99,18 @@ struct song generateSongFromLine(char* line) {
 * @return the pointer to the head node of the linked list. 
 */ 
 struct node *generateSongList() { 
-  FILE *fp = NULL; 
-  fp = fopen("songlist.csv", "r"); 
-  char buffer[128]; 
-  fgets(buffer, 128, fp); 
-  fgets(buffer, 128, fp); 
+  FILE *fp = NULL; // make a pointer to store the new file. 
+  fp = fopen("songlist.csv", "r"); // open the file to be read. 
+  char buffer[128]; // create an empty buffer to store each read line. 
+  fgets(buffer, 128, fp); // read and discard the first line (template line)
+  fgets(buffer, 128, fp); // read the first line
+  // create first item in list with information from buffer: 
   struct node *head = insert_front(generateSongFromLine(buffer), NULL); 
   while (fgets(buffer, 128, fp) != NULL) { // while there are lines to read: 
+    // insert information from the line at the start of the list: 
     head = insert_front(generateSongFromLine(buffer), head);
   }
-  fclose(fp); 
+  fclose(fp); // close the file once done. 
   return head; 
 }
 
@@ -120,10 +122,8 @@ void freeList(struct node *head) {
   struct node* nextHead;
   while (head != NULL) { 
     nextHead = head -> next; // save the next node. 
-    //printf("freeing head w/ val: %s\n", head -> val.title); 
-    free(head); 
-    head = nextHead; 
-    //printList(head); 
+    free(head); // free what *was* the head. 
+    head = nextHead; // 
   }
 }
  
@@ -153,21 +153,21 @@ struct node* removeMostDanceable(struct node* head) {
     thisNodeIndex++; // keep track of what index in the list we're at.
   }
   // remove and print the most danceable song: 
-  struct node* toRemove; 
-  struct node* headToReturn; 
-  if (indexOfMostDanceable == 0) { 
-    headToReturn = head -> next; 
-    toRemove = head; 
+  struct node* toRemove; // store which node to remove from the list.
+  struct node* headToReturn; // store which node is the head of the list
+  if (indexOfMostDanceable == 0) { // if the most danceable is first in list:  
+    headToReturn = head -> next; // return the next node in list as the head. 
+    toRemove = head; // set the original head to be removed. 
   } 
   else { // if the item to remove is NOT the first: 
-    thisNode = head; 
-    for (int i = 0; i < indexOfMostDanceable - 1; i ++ ) { 
+    thisNode = head;
+    for (int i = 0; i < indexOfMostDanceable - 1; i ++ ) { // move through list
       thisNode = thisNode -> next; // reach node directly BEFORE one to remove. 
     }
-    // on the node before the one to remove: 
-    toRemove = thisNode -> next; 
-    thisNode -> next = toRemove -> next; 
-    headToReturn = head; 
+    // on the node before the one to remove (thisNode): 
+    toRemove = thisNode -> next; // store the node to be removed
+    thisNode -> next = toRemove -> next; // make it so list points normally
+    headToReturn = head; // the head hasn't changed, return the previous head. 
   }  
   printf("---------------------------------------- Most danceable ---------------"
   "---------------------\n");
@@ -185,16 +185,16 @@ struct node* removeMostDanceable(struct node* head) {
   }
   printf("-----------------------------------------------------------------------"
   "---------------------\n\n"); 
-  free(toRemove); 
-  return headToReturn; 
+  free(toRemove); // remove the most danceable node. 
+  return headToReturn; // return the new head
 }
 
 int main() {
-  struct node* head = generateSongList();      
-  printList(head); 
+  struct node* head = generateSongList(); // generate + store new linked list
+  printList(head);
 
   char response[16];
-  while (1) { // cancel when input something other than d
+  while (1) {
     printf("Press 'd' to show the most danceable song (any other key to quit): ");
     scanf("%s", response); //read user input.
     if (strcmp(response, "d") == 0) { // if they say "d": 
