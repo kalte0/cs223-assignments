@@ -100,4 +100,6 @@ int main(int argc, char* argv[]) {
   write_ppm(filename, pixels, size, size); 
   printf("Computed mandelbrot set (%dx%d) in %f seconds\n", size, size, timer); 
   printf("Writing file: %s\n", filename); 
+  free(pallet);
+  free(pixels); 
 }
