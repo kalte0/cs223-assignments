@@ -55,8 +55,8 @@ struct data {
 * @return NULL; 
 */
 void* fillPixels (void* givenThreadData) {
-  struct data* threadData = (struct data*) givenThreadData; // cast thread into a form we
-an read:
+  struct data* threadData = (struct data*) givenThreadData; 
+      // cast thread into a form we can read:
   // decide where to start writing for each thread: 
   int rowStart = 0;
   int colStart = 0;
@@ -155,11 +155,6 @@ an read:
       color.red = value * 255;
       color.green = value * 255;
       color.blue = value * 255;
-      if (threadData -> thisThreadNum == 0) {
-        printf("writing color: (%d, %d, %d) at pixel: %d, %d\n",
-                                color.red, color.green, color.blue,
-                                r, c);
-      }
 
       // write color to image at location (row, col) 
       threadData -> pixels[c*(threadData -> size) + r] = color;
@@ -167,6 +162,7 @@ an read:
   }
 
   pthread_barrier_wait (&barrier);
+  printf("Thread %d finished\n", threadData -> thisThreadNum); 
   return NULL;
 }
 
@@ -270,7 +266,7 @@ int main(int argc, char* argv[]) {
   // turn the time into a double that we can easily print: shows elapsed seconds:   
   double timer = tend.tv_sec - tstart.tv_sec + (tend.tv_usec - tstart.tv_usec)/1.e6;
   write_ppm(filename, pixels, size, size); // write to file.
-  printf("Computed mandelbrot set (%dx%d) in %f seconds\n", size, size, timer);
+  printf("Computed buddhabrot set (%dx%d) in %f seconds\n", size, size, timer);
   printf("Writing file: %s\n", filename);
   free(pixels);
 }
