@@ -13,3 +13,4 @@ buddhabrot: buddhabrot.c read_ppm.c write_ppm.c
 clean: 
 	rm thread_mandelbrot buddhabrot search
 
+#Hello
