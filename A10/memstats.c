@@ -1,3 +1,9 @@
+/*-------------------------------
+* name: Renata Del Vecchio
+* date: 4/19/2023
+* summary: A program which runs tests with the malloc and free commands filling a buffer
+ * and freelist. 
+---------------------------------*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -17,6 +23,39 @@ struct chunk {
 };
 
 void memstats(struct chunk* freelist, void* buffer[], int len) {
+  // to do: print the following information: 
+  int totalMemory = 0; 
+  int freeMemory = 0; 
+  int usedMemory = 0; 
+  int unusedMemory = 0; 
+  
+  int freeBlocks = 0; 
+  struct chunk *thisNode = freelist; 
+  while (thisNode != NULL) { // Go through the free list
+    totalMemory += thisNode -> size; // add to the total memory
+    freeMemory += thisNode -> size; // check if this is size or used. 
+    usedMemory += thisNode -> used; // add to used memories. 
+    freeBlocks++; 
+    //unusedMemory += thisNode -> size - thisNode -> used; 
+    thisNode = thisNode -> next; // continue down the free list.  
+  } 
+
+  int usedBlocks = 0; 
+  for (int i = 0; i < len; i ++ ) { // for each chunk in buffer.
+    if (buffer[i] != NULL) { // if there is something at this point
+      struct chunk* thisChunk = ((struct chunk*) buffer[i]) - 1;
+      totalMemory += thisChunk -> size; 
+      usedMemory += thisChunk -> used; 
+      unusedMemory += thisChunk -> size - thisChunk -> used; 
+      usedBlocks ++; 
+    }
+  }
+  printf("Total blocks: %d Free Blocks: %d Used blocks: %d\n", 
+                freeBlocks + usedBlocks, freeBlocks, usedBlocks); 
+  printf("Total memory allocated: %d Free memory: %d Used memory: %d\n",
+                totalMemory, freeMemory, totalMemory - freeMemory); 
+  printf("Underutilized memory: %f\n", 
+                ((float)(unusedMemory) / (float) (totalMemory - freeMemory))); 
 }
 
 int main ( int argc, char* argv[]) {
