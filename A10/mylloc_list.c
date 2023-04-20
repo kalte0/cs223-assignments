@@ -16,6 +16,11 @@ struct chunk {
 
 struct chunk* flist = NULL;
 
+/*
+* Allocates a chunk of memory. 
+* @param size the amount of memory to allocate.
+* @return void* a pointer to the space in memory
+*/
 void *malloc (size_t size) { 
   if (size == 0) { 
     return NULL;
@@ -48,6 +53,10 @@ void *malloc (size_t size) {
   }
 }
 
+/*
+* free-- frees a block of allocated memory given. 
+* @param memory a block of memory to be freed
+*/
 void free (void *memory) { 
   if (memory != NULL) { 
     // we're jumping back one chucnk position: 

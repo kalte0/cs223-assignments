@@ -1,3 +1,8 @@
+/* ------------
+* name: Renata Del Vecchio
+* date: 4/29/2023
+* description: Utilities for extending the amount of memory allocated to a program.
+-----------------*/
 #include <stdlib.h>
 #include <sys/mman.h>
 

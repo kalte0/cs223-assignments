@@ -22,6 +22,12 @@ struct chunk {
   struct chunk *next;
 };
 
+/*
+* prints out information about the freelist and buffer.
+* @param freelist the list of freed blocks
+* @param buffer the chunks of memory. 
+* @param len the length of the buffer. 
+*/
 void memstats(struct chunk* freelist, void* buffer[], int len) {
   // to do: print the following information: 
   int totalMemory = 0; 
